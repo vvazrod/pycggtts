@@ -2,6 +2,8 @@ from enum import StrEnum, auto
 
 
 class Code(StrEnum):
+    """GNSS code types."""
+
     C1 = auto()
     C2 = auto()
     P1 = auto()

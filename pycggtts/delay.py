@@ -7,9 +7,10 @@ from .code import Code
 
 @dataclass
 class Delay:
-    """A GNSS receiver delay.
+    """GNSS receiver delay.
 
-    Delays are always specified in nanoseconds."""
+    Delays are always specified in nanoseconds.
+    """
 
     value: np.float64
 
@@ -26,7 +27,7 @@ class Delay:
 
 @dataclass
 class SystemDelay:
-    """Describes the total measurement systems delay."""
+    """Describes the total measurement system's delay."""
 
     cab_delay: np.float64 = 0.0
     ref_delay: np.float64 = 0.0

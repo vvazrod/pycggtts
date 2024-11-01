@@ -9,6 +9,7 @@ from hifitime import Duration, Epoch, Unit
 TrackType = types.SimpleNamespace()
 TrackType.WITH_IONO = 24
 TrackType.WITHOUT_IONO = 21
+TrackType.RAW = 12
 
 
 class CommonViewClass(StrEnum):
@@ -28,51 +29,53 @@ class IonosphericData:
         isg: Root-mean-square of the residuals in nanoseconds.
     """
 
-    msio: np.float64
-    smsi: np.float64
-    isg: np.float64
+    msio: np.float64 | None
+    smsi: np.float64 | None
+    isg: np.float64 | None
 
 
 @dataclass
 class TrackData:
     """Track data.
 
+    All values expressed in seconds.
+
     Attributes:
-        refsv: Difference to the reference SV in nanoseconds.
-        srsv: Slope of the reference SV in picoseconds per second.
-        refsys: Difference to the reference system in nanoseconds.
-        srsys: Slope of the reference system in picoseconds per second.
-        dsg: Root-mean-square of the residuals to linear fit in nanoseconds.
+        refsv: Difference to the reference SV.
+        srsv: Slope of the reference SV.
+        refsys: Difference to the reference system.
+        srsys: Slope of the reference system.
+        dsg: Root-mean-square of the residuals to linear fit.
         ioe: Three-digit decimal code indicating the ephemeris used for the computation.
-        mdtr: Modeled tropospheric delay in nanoseconds.
-        smdt: Slope of the modeled tropospheric delay in picoseconds per second.
-        mdio: Modeled ionospheric delay in nanoseconds.
-        smdi: Slope of the modeled ionospheric delay in picoseconds per second.
+        mdtr: Modeled tropospheric delay.
+        smdt: Slope of the modeled tropospheric delay.
+        mdio: Modeled ionospheric delay.
+        smdi: Slope of the modeled ionospheric delay.
     """
 
     refsv: np.float64
-    srsv: np.float64
+    srsv: np.float64 | None
     refsys: np.float64
-    srsys: np.float64
-    dsg: np.float64
+    srsys: np.float64 | None
+    dsg: np.float64 | None
     ioe: np.uint16
     mdtr: np.float64
-    smdt: np.float64
+    smdt: np.float64 | None
     mdio: np.float64
-    smdi: np.float64
+    smdi: np.float64 | None
 
     @classmethod
     def _parse_data(cls, items: Iterator[str]):
-        refsv = np.float64(next(items)) * 0.1
-        srsv = np.float64(next(items)) * 0.1
-        refsys = np.float64(next(items)) * 0.1
-        srsys = np.float64(next(items)) * 0.1
-        dsg = np.float64(next(items)) * 0.1
+        refsv = np.float64(next(items)) * 0.1e-9
+        srsv = np.float64(next(items)) * 0.1e-12
+        refsys = np.float64(next(items)) * 0.1e-9
+        srsys = np.float64(next(items)) * 0.1e-12
+        dsg = np.float64(next(items)) * 0.1e-9
         ioe = np.uint16(next(items))
-        mdtr = np.float64(next(items)) * 0.1
-        smdt = np.float64(next(items)) * 0.1
-        mdio = np.float64(next(items)) * 0.1
-        smdi = np.float64(next(items)) * 0.1
+        mdtr = np.float64(next(items)) * 0.1e-9
+        smdt = np.float64(next(items)) * 0.1e-12
+        mdio = np.float64(next(items)) * 0.1e-9
+        smdi = np.float64(next(items)) * 0.1e-12
 
         return cls(refsv, srsv, refsys, srsys, dsg, ioe, mdtr, smdt, mdio, smdi)
 
@@ -85,11 +88,27 @@ class TrackData:
         data = cls._parse_data(items)
 
         iono = IonosphericData(
-            msio=np.float64(next(items)) * 0.1,
-            smsi=np.float64(next(items)) * 0.1,
-            isg=np.float64(next(items)) * 0.1,
+            msio=np.float64(next(items)) * 0.1e-9,
+            smsi=np.float64(next(items)) * 0.1e-12,
+            isg=np.float64(next(items)) * 0.1e-9,
         )
         return data, iono
+
+    @classmethod
+    def parse_raw(cls, items: Iterator[str]):
+        refsv = np.float64(next(items)) * 0.1e-9
+        refsys = np.float64(next(items)) * 0.1e-9
+        ioe = np.uint16(next(items))
+        mdtr = np.float64(next(items)) * 0.1e-9
+        mdio = np.float64(next(items)) * 0.1e-9
+
+        try:
+            msio = np.float64(next(items)) * 0.1e-9
+        except ValueError:
+            msio = None
+
+        iono = IonosphericData(msio=msio, smsi=None, isg=None)
+        return cls(refsv, None, refsys, None, None, ioe, mdtr, None, mdio, None), iono
 
 
 @dataclass
@@ -110,16 +129,16 @@ class Track:
         frc:  Carrier frequency standard 3 letter code.
     """
 
-    cv_class: CommonViewClass
+    cv_class: CommonViewClass | None
     epoch: Epoch
-    duration: Duration
+    duration: Duration | None
     sv: str
     elevation: np.float64
     azimuth: np.float64
     data: TrackData
     iono: IonosphericData | None
-    fr: np.uint8
-    hc: np.uint8
+    fr: np.uint8 | None
+    hc: np.uint8 | None
     frc: str
 
     @classmethod
@@ -130,7 +149,9 @@ class Track:
         it_items = iter(items)
 
         sv = next(it_items)
-        cv_class = CommonViewClass(next(it_items))
+        cv_class = (
+            CommonViewClass(next(it_items)) if num_items != TrackType.RAW else None
+        )
         mjd = np.int32(next(it_items))
 
         sttime = next(it_items)
@@ -146,9 +167,12 @@ class Track:
         epoch = epoch + Unit.Minute * np.float64(mm)
         epoch = epoch + Unit.Second * np.float64(ss)
 
-        duration = Duration.from_total_nanoseconds(
-            (np.float64(next(it_items)) * 1e9).astype(np.int64)
-        )
+        if num_items != TrackType.RAW:
+            duration = Duration.from_total_nanoseconds(
+                (np.float64(next(it_items)) * 1e9).astype(np.int64)
+            )
+        else:
+            duration = None
 
         elevation = np.float64(next(it_items)) * 0.1
         azimuth = np.float64(next(it_items)) * 0.1
@@ -160,15 +184,23 @@ class Track:
                 data, iono = TrackData.parse_with_iono(it_items)
             case TrackType.WITHOUT_IONO:
                 data, iono = TrackData.parse_without_iono(it_items)
+            case TrackType.RAW:
+                data, iono = TrackData.parse_raw(it_items)
             case _:
                 raise ValueError("Invalid number of items")
 
-        fr = np.uint8(next(it_items))
-        hc = np.uint8(next(it_items))
+        if num_items != TrackType.RAW:
+            fr = np.uint8(next(it_items))
+            hc = np.uint8(next(it_items))
+        else:
+            fr = None
+            hc = None
+
         frc = next(it_items)
 
         # TODO: Process checksum
-        _ = next(it_items)
+        if num_items != TrackType.RAW:
+            _ = next(it_items)
 
         return cls(
             cv_class, epoch, duration, sv, elevation, azimuth, data, iono, fr, hc, frc

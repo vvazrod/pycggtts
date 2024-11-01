@@ -47,7 +47,7 @@ class CGGTTS:
     """
 
     version: Version = Version.VERSION_2E
-    release_date: Epoch = field(
+    release_date: Epoch | None = field(
         default_factory=Epoch.init_from_gregorian_at_midnight(
             2014, 2, 20, TimeScale.UTC
         )
@@ -70,7 +70,7 @@ class CGGTTS:
             lines = iter(file_content.splitlines())
 
             # Initialize variables
-            release_date = Epoch.system_now()
+            release_date = None
             num_channels = 0
             receiver = None
             ims = None
@@ -83,12 +83,15 @@ class CGGTTS:
 
             # Version always comes first
             line = next(lines)
-            m = re.match(r"CGGTTS\s+GENERIC DATA FORMAT VERSION = (\w+)", line)
-            match m:
-                case None:
-                    raise ValueError("Version format error.")
-                case _:
-                    version = Version.from_str(m.group(1))
+            if line.strip() == "RAW CLOCK RESULTS":
+                version = Version.RAW
+            else:
+                m = re.match(r"CGGTTS\s+GENERIC DATA FORMAT VERSION = (\w+)", line)
+                match m:
+                    case None:
+                        raise ValueError("Version format error.")
+                    case _:
+                        version = Version.from_str(m.group(1))
 
             # Parse the header
             while True:

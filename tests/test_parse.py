@@ -121,3 +121,21 @@ def test_parse_ezug0060_600():
     assert cggtts.delay.cab_delay == 157.0
     assert cggtts.delay.ref_delay == 5.0
     assert len(cggtts.tracks) == 634
+
+
+def test_parse_raw():
+    filepath = Path(__file__).parent / "../data" / "raw" / "CTTS_GAL_30s_E1"
+    cggtts = CGGTTS.from_file(filepath)
+    assert cggtts is not None
+    assert cggtts.release_date is None
+    assert cggtts.receiver is None
+    assert cggtts.ims is None
+    assert cggtts.station == "UGR"
+    assert cggtts.num_channels == 0
+    assert cggtts.apc_coordinates.x == 5077155.53
+    assert cggtts.apc_coordinates.y == -321597.67
+    assert cggtts.apc_coordinates.z == +3835335.89
+    assert cggtts.comments is not None
+    assert cggtts.delay.cab_delay == 157.0
+    assert cggtts.delay.ref_delay == 5.0
+    assert len(cggtts.tracks) == 79
