@@ -12,6 +12,74 @@ files = [
 ]
 
 [[package]]
+name = "hifitime"
+version = "4.0.0"
+description = "Ultra-precise date and time handling in Rust for scientific applications with leap second support"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "hifitime-4.0.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:864808300da1700c26a85a3321db0db4832b0e7f368498da46f257f75aecb904"},
+    {file = "hifitime-4.0.0-cp310-cp310-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:9703bf5fd89ed49547de0731d62c4bfd9c9b604df101c425ed6ad60dfd7ca5bb"},
+    {file = "hifitime-4.0.0-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1cbf5db28e5103fda346b2ed4406ce93595d913ebb23dc93ebbd5b8f344ed5d6"},
+    {file = "hifitime-4.0.0-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:c31b71da7bca0c709cebbad54d57f2eb91319fd85a8e492c2653103f6ffaebfa"},
+    {file = "hifitime-4.0.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1ee02b36fd1ca8add50969d8a1dc4820015027e812c2f9580e8c4ecd91604292"},
+    {file = "hifitime-4.0.0-cp310-none-win32.whl", hash = "sha256:63989eb9f1266035486c953786953f0f8410fc449217d11963b4970b20091bbf"},
+    {file = "hifitime-4.0.0-cp310-none-win_amd64.whl", hash = "sha256:0ee6fd8de7239c1011843e9f49f540fca4e22d477d22d9a8ddb4e83a832dc35c"},
+    {file = "hifitime-4.0.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:26dfb74570eabdc093fd13a48b4da1e4bc9e5bc5337c9e5ef635d4b7b2f223c1"},
+    {file = "hifitime-4.0.0-cp311-cp311-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:7fac83caf418ac6872cb89f6cffd9688f44c1461ae18415243c00249da7c58eb"},
+    {file = "hifitime-4.0.0-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:c29419ed9536e6d7f6fc887628dbacd6e03729cdd737ac5fbc8ba01375c57dea"},
+    {file = "hifitime-4.0.0-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:b4214c97a8d0d18fdaf6af48a24e3fa1bb1ab567a45a478e3d84a2743c854f88"},
+    {file = "hifitime-4.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:59b02cfa6f0efc2d61de0221bf784f49c00e37ed4271cc1eecaf7a3add70b821"},
+    {file = "hifitime-4.0.0-cp311-none-win32.whl", hash = "sha256:299ac8aeef7ced4d521a044983f54969c3b94cb6d28b9c94514eb77a2733d4a8"},
+    {file = "hifitime-4.0.0-cp311-none-win_amd64.whl", hash = "sha256:1acc7b223fc45fdba306417a944a606650fb9addde3c6d9540e89931f8c89634"},
+    {file = "hifitime-4.0.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:220cd6340303b5f5d64ec32cba5d6b82fa495cdf97d83100c843bd5c7db11d24"},
+    {file = "hifitime-4.0.0-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:a4df4b35754c5973aa171b30e2a92626af25e68936102aa8cb8f21427103c0ce"},
+    {file = "hifitime-4.0.0-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:6b451314c82afb9a9a1da9276a882b77d180fe54a1d39e5ba80974386834f8bf"},
+    {file = "hifitime-4.0.0-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:1d6b49fe78d36d3a0c2307eff14d0b90b4dc68b7cf2f597819b163b194171f3f"},
+    {file = "hifitime-4.0.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:55ecf1c78f564425233f8abe1eb5357aea0c68bb6d1c9e7337f99b9c49e1a7ea"},
+    {file = "hifitime-4.0.0-cp312-none-win32.whl", hash = "sha256:ed610e8468cc187cea08ca35c1a0ac96fc7719b403d82af1d2fbf9b7a827520e"},
+    {file = "hifitime-4.0.0-cp312-none-win_amd64.whl", hash = "sha256:1c3882deb112d6136f2670071f38780a994ad01a2d31fdd49bd04862c5ae7afd"},
+    {file = "hifitime-4.0.0-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6e768ceebdb4c33d79b8441b1c807637936a6829324c89f382b76915940f60bc"},
+    {file = "hifitime-4.0.0-cp37-cp37m-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:b6ce52946571cecb7ab53de8985aebf1d8c5b179eabac0795a44459389afcd29"},
+    {file = "hifitime-4.0.0-cp37-cp37m-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:717d122255a549fd54b4777c52da58e612158366c697ab8460d1f195471a43b4"},
+    {file = "hifitime-4.0.0-cp37-cp37m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:12bb695be02bcfc606a93564e703af6167ffdd4ff52637904674c2da6cb4e151"},
+    {file = "hifitime-4.0.0-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:15a5601231886d2ed38c03863166e1263bfd096cfb14519eb5ca9e3deec78940"},
+    {file = "hifitime-4.0.0-cp37-none-win32.whl", hash = "sha256:bae9d3fdf2cf84e4937f43fb7092096c07c51431066d0f41ff212b492bf01a78"},
+    {file = "hifitime-4.0.0-cp37-none-win_amd64.whl", hash = "sha256:5de387f04910cb37ca75c454cf6d0437fee2c58629638f611ecc084eb103c018"},
+    {file = "hifitime-4.0.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:9d56b187417ad657863771cda854c674d17f946d62e82c909965d7caf937f516"},
+    {file = "hifitime-4.0.0-cp38-cp38-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:572d5546d189b232ea62b0ace1e5f850f70be065974a4524cb8d16184a8bc745"},
+    {file = "hifitime-4.0.0-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:ef8873a49cdcb0eebeac9a5e934bd0051acc13fcc5ee2f3f1bf21368ec38734c"},
+    {file = "hifitime-4.0.0-cp38-cp38-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:94eab5a263d8dc64492d08f492e9c818df1e148ff949586b02f118cdf5b07809"},
+    {file = "hifitime-4.0.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cb0d1b7fd6d906fabbfac135f70ee77614bf05d8047c95cd130305a98442f6bf"},
+    {file = "hifitime-4.0.0-cp38-none-win32.whl", hash = "sha256:30abf1c8d26640f8039655926eb0bff260b4c93662b88648dcf96fc1dee034c0"},
+    {file = "hifitime-4.0.0-cp38-none-win_amd64.whl", hash = "sha256:7839816363c5aadbe069254ad9c90a292e132cb505a284cd5b01541b1199201a"},
+    {file = "hifitime-4.0.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2b65cc5095299dcdfb512dbf083dd672907dbb0a830b266d56ca2d0c4026d7d7"},
+    {file = "hifitime-4.0.0-cp39-cp39-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:22f5e5e9f1a3023e1ae9332f88c9ea76791158f8fbcfd70ee9335dc30b84a135"},
+    {file = "hifitime-4.0.0-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:c1004aecc1e3586fda4b6e671a6deec61302e2c8db9a46b3ac29ae817e124696"},
+    {file = "hifitime-4.0.0-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:57067437dbc928f036b87fdb29d97369dce1d58766acde799d5668e80053d60f"},
+    {file = "hifitime-4.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dc949501db407ced7bf8bbf3b6403fd88e58409c15bdcc85de0095fb943daa06"},
+    {file = "hifitime-4.0.0-cp39-none-win32.whl", hash = "sha256:7c982d1a1d6a3f29efdf4b10f8d09517435f19c9fa4c4258bf603a1756b27ea4"},
+    {file = "hifitime-4.0.0-cp39-none-win_amd64.whl", hash = "sha256:3735f7ae662c7fcf5ba81c4b49307650eaf7c2c624626b4281c759120ee0608e"},
+    {file = "hifitime-4.0.0-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e25c97b89372fa34bb4a72a44bd4c0c4e6f67c62fc6198388a50e8eec8c41cbc"},
+    {file = "hifitime-4.0.0-pp310-pypy310_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:94edef10de6d8b08290fdf1c379815c52401d2e6bf6100d0b61828ccdbb02da8"},
+    {file = "hifitime-4.0.0-pp310-pypy310_pp73-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:95bee407061b63c596354efaca5d129357ce875e136e85d44171ca85e47ede2a"},
+    {file = "hifitime-4.0.0-pp310-pypy310_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:f0a9e154178784017cfa1fc66c5365fd35c0cc4c98180543dbe609a78c1fa611"},
+    {file = "hifitime-4.0.0-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3dbe7e6bfa6e58d7cced461202a81209de4a3779f9b07e587eb3aac7167d0f00"},
+    {file = "hifitime-4.0.0-pp37-pypy37_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:37a1995581dbfa47215cc53977ee95db017d22b70b49dca971e76ec60c5e85ac"},
+    {file = "hifitime-4.0.0-pp37-pypy37_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:cf2251bc414e2062ac7a235433dd96bbb7b7627bc5a7521dc0d70ecf30601a46"},
+    {file = "hifitime-4.0.0-pp37-pypy37_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d24a6ed8e03fa3c1a789882ecf058486d77a7d91c7ed76cec3d1cf9b5c9bafd1"},
+    {file = "hifitime-4.0.0-pp38-pypy38_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7292a6415459f8760e88f6fe1315d2c4e56d91accadf0a8b823a9df99ddb6fcd"},
+    {file = "hifitime-4.0.0-pp38-pypy38_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:798277f20ce8e9debf75136fda4273223a395a4365e2d689eb5bd136bc5f470a"},
+    {file = "hifitime-4.0.0-pp38-pypy38_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d83f47f3d9126d9d959136e577b0e8358952a832dfbdbe190a3f16e8a54c1a2f"},
+    {file = "hifitime-4.0.0-pp39-pypy39_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d851d8fa8831079ec3d29250aaff1b423f2be1f9d08cc5d3b40f51a552e35c2b"},
+    {file = "hifitime-4.0.0-pp39-pypy39_pp73-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:a3e1dbde920a5dfca571357083165cdc6e79c2ef596aebd4b1ba3ba9be60d0e7"},
+    {file = "hifitime-4.0.0-pp39-pypy39_pp73-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:ed0ce538e5e9f15bf713d57fbf27df053d57fdddf62fb4e4e330ceec9e98d5e5"},
+    {file = "hifitime-4.0.0-pp39-pypy39_pp73-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:bcc919d749738279c632f4036d58023fc7ac497d52887cb78ba04f6bb1a7a0eb"},
+    {file = "hifitime-4.0.0-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:91f7da27c7863c58aba178bb65e5e4b9aaed4e6c65422524227fe5ab98297872"},
+    {file = "hifitime-4.0.0.tar.gz", hash = "sha256:f6fa5ae6b85c3f3ed97f7078ee403cf9a7d8c256d33e4b7fb4428c06557d3762"},
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
@@ -234,4 +302,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "3a15b24be8a27654c5efdc3e9e959b00aff463c4531c6e7f29192bd5cbbb008f"
+content-hash = "5fc669353d432ce16ef65927274aac617874e93d9247db6c8c9b3001b07dc70b"

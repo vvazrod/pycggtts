@@ -53,10 +53,14 @@ class ReferenceTime:
                 return s
 
     def __eq__(self, other):
+        print(other.__class__)
+        print(self.__class__)
         if not isinstance(other, ReferenceTime):
             return False
 
+        print(self)
         if self._system.__class__ == other._system.__class__:
+            print(self._system)
             match self._system:
                 case UTCk(lab):
                     return lab == other._system.lab
