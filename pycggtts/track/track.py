@@ -75,7 +75,10 @@ class TrackData:
         mdtr = np.float64(next(items)) * 0.1e-9
         smdt = np.float64(next(items)) * 0.1e-12
         mdio = np.float64(next(items)) * 0.1e-9
-        smdi = np.float64(next(items)) * 0.1e-12
+        try:
+            smdi = np.float64(next(items)) * 0.1e-12
+        except ValueError:
+            smdi = None
 
         return cls(refsv, srsv, refsys, srsys, dsg, ioe, mdtr, smdt, mdio, smdi)
 

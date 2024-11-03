@@ -2,7 +2,7 @@ from pathlib import Path
 
 from hifitime import Duration, Epoch, TimeScale
 
-from pycggtts import CGGTTS, CommonViewClass, ReferenceTime, Track
+from pycggtts import CommonViewClass, ReferenceTime, Track, load
 
 
 def test_parse_track_without_iono():
@@ -81,61 +81,64 @@ def test_parse_track_with_iono():
 
 def test_parse_gzsy8259_568():
     filepath = Path(__file__).parent / "../data" / "single" / "GZSY8259.568"
-    cggtts = CGGTTS.from_file(filepath)
-    assert cggtts is not None
-    assert cggtts.release_date == Epoch.init_from_gregorian_at_midnight(
+    with open(filepath, "rb") as f:
+        c = load(f)
+    assert c is not None
+    assert c.release_date == Epoch.init_from_gregorian_at_midnight(
         2014, 2, 20, TimeScale.UTC
     )
-    assert cggtts.receiver == "GORGYTIMING"
-    assert cggtts.station == "SY82"
-    assert cggtts.num_channels == 12
-    assert cggtts.ims is None
-    assert cggtts.reference_time == ReferenceTime.from_str("REF(SY82)")
-    assert cggtts.reference_frame == "ITRF"
-    assert abs(cggtts.apc_coordinates.x - 4314143.824) < 1e-6
-    assert abs(cggtts.apc_coordinates.y - 452633.241) < 1e-6
-    assert abs(cggtts.apc_coordinates.z - 4660711.385) < 1e-6
-    assert cggtts.comments is None
-    assert len(cggtts.tracks) == 32
+    assert c.receiver == "GORGYTIMING"
+    assert c.station == "SY82"
+    assert c.num_channels == 12
+    assert c.ims is None
+    assert c.reference_time == ReferenceTime.from_str("REF(SY82)")
+    assert c.reference_frame == "ITRF"
+    assert abs(c.apc_coordinates.x - 4314143.824) < 1e-6
+    assert abs(c.apc_coordinates.y - 452633.241) < 1e-6
+    assert abs(c.apc_coordinates.z - 4660711.385) < 1e-6
+    assert c.comments is None
+    assert len(c.tracks) == 32
 
-    first_track = cggtts.tracks[0]
+    first_track = c.tracks[0]
     assert first_track is not None
     assert first_track.sv == "G99"
 
 
 def test_parse_ezug0060_600():
     filepath = Path(__file__).parent / "../data" / "dual" / "EZUG0060.600"
-    cggtts = CGGTTS.from_file(filepath)
-    assert cggtts is not None
-    assert cggtts.release_date == Epoch.init_from_gregorian_at_midnight(
+    with open(filepath, "rb") as f:
+        c = load(f)
+    assert c is not None
+    assert c.release_date == Epoch.init_from_gregorian_at_midnight(
         2023, 7, 12, TimeScale.UTC
     )
-    assert cggtts.receiver == "PolaRx5TR"
-    assert cggtts.ims is None
-    assert cggtts.station == "UGR"
-    assert cggtts.num_channels == 80
-    assert cggtts.apc_coordinates.x == 5077155.269
-    assert cggtts.apc_coordinates.y == -321597.459
-    assert cggtts.apc_coordinates.z == 3835335.920
-    assert cggtts.comments is not None
-    assert cggtts.delay.cab_delay == 157.0
-    assert cggtts.delay.ref_delay == 5.0
-    assert len(cggtts.tracks) == 634
+    assert c.receiver == "PolaRx5TR"
+    assert c.ims is None
+    assert c.station == "UGR"
+    assert c.num_channels == 80
+    assert c.apc_coordinates.x == 5077155.269
+    assert c.apc_coordinates.y == -321597.459
+    assert c.apc_coordinates.z == 3835335.920
+    assert c.comments is not None
+    assert c.delay.cab_delay == 157.0
+    assert c.delay.ref_delay == 5.0
+    assert len(c.tracks) == 634
 
 
 def test_parse_raw():
     filepath = Path(__file__).parent / "../data" / "raw" / "CTTS_GAL_30s_E1"
-    cggtts = CGGTTS.from_file(filepath)
-    assert cggtts is not None
-    assert cggtts.release_date is None
-    assert cggtts.receiver is None
-    assert cggtts.ims is None
-    assert cggtts.station == "UGR"
-    assert cggtts.num_channels == 0
-    assert cggtts.apc_coordinates.x == 5077155.53
-    assert cggtts.apc_coordinates.y == -321597.67
-    assert cggtts.apc_coordinates.z == +3835335.89
-    assert cggtts.comments is not None
-    assert cggtts.delay.cab_delay == 157.0
-    assert cggtts.delay.ref_delay == 5.0
-    assert len(cggtts.tracks) == 79
+    with open(filepath, "rb") as f:
+        c = load(f)
+    assert c is not None
+    assert c.release_date is None
+    assert c.receiver is None
+    assert c.ims is None
+    assert c.station == "UGR"
+    assert c.num_channels == 0
+    assert c.apc_coordinates.x == 5077155.53
+    assert c.apc_coordinates.y == -321597.67
+    assert c.apc_coordinates.z == +3835335.89
+    assert c.comments is not None
+    assert c.delay.cab_delay == 157.0
+    assert c.delay.ref_delay == 5.0
+    assert len(c.tracks) == 79
