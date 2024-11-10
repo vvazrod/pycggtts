@@ -22,5 +22,3 @@ __all__ = [
     "Track",
     "Version",
 ]
-
-__version__ = "0.1.0"
