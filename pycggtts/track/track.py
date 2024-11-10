@@ -90,11 +90,14 @@ class TrackData:
     def parse_with_iono(cls, items: Iterator[str]):
         data = cls._parse_data(items)
 
-        iono = IonosphericData(
-            msio=np.float64(next(items)) * 0.1e-9,
-            smsi=np.float64(next(items)) * 0.1e-12,
-            isg=np.float64(next(items)) * 0.1e-9,
-        )
+        msio = np.float64(next(items)) * 0.1e-9
+        try:
+            smsi = np.float64(next(items)) * 0.1e-12
+        except ValueError:
+            smsi = None
+        isg = np.float64(next(items)) * 0.1e-9
+
+        iono = IonosphericData(msio, smsi, isg)
         return data, iono
 
     @classmethod
