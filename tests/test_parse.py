@@ -102,6 +102,11 @@ def test_parse_gzsy8259_568():
     first_track = c.tracks[0]
     assert first_track is not None
     assert first_track.sv == "G99"
+    assert first_track.data.refsv == 999999999.9e-9
+    assert first_track.data.srsv == 9999.9e-12
+    assert first_track.data.refsys == 153.6e-9
+    assert first_track.data.srsys == 18.1e-12
+    assert first_track.data.ioe == 999
 
 
 def test_parse_ezug0060_600():

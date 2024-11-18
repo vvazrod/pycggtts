@@ -66,19 +66,16 @@ class TrackData:
 
     @classmethod
     def _parse_data(cls, items: Iterator[str]):
-        refsv = np.float64(next(items)) * 0.1e-9
-        srsv = np.float64(next(items)) * 0.1e-12
-        refsys = np.float64(next(items)) * 0.1e-9
-        srsys = np.float64(next(items)) * 0.1e-12
-        dsg = np.float64(next(items)) * 0.1e-9
-        ioe = np.uint16(next(items))
-        mdtr = np.float64(next(items)) * 0.1e-9
-        smdt = np.float64(next(items)) * 0.1e-12
-        mdio = np.float64(next(items)) * 0.1e-9
-        try:
-            smdi = np.float64(next(items)) * 0.1e-12
-        except ValueError:
-            smdi = None
+        refsv = _parse_value(next(items), np.float64, 0.1e-9)
+        srsv = _parse_value(next(items), np.float64, 0.1e-12)
+        refsys = _parse_value(next(items), np.float64, 0.1e-9)
+        srsys = _parse_value(next(items), np.float64, 0.1e-12)
+        dsg = _parse_value(next(items), np.float64, 0.1e-9)
+        ioe = _parse_value(next(items), np.uint16)
+        mdtr = _parse_value(next(items), np.float64, 0.1e-9)
+        smdt = _parse_value(next(items), np.float64, 0.1e-12)
+        mdio = _parse_value(next(items), np.float64, 0.1e-9)
+        smdi = _parse_value(next(items), np.float64, 0.1e-12)
 
         return cls(refsv, srsv, refsys, srsys, dsg, ioe, mdtr, smdt, mdio, smdi)
 
@@ -90,28 +87,22 @@ class TrackData:
     def parse_with_iono(cls, items: Iterator[str]):
         data = cls._parse_data(items)
 
-        msio = np.float64(next(items)) * 0.1e-9
-        try:
-            smsi = np.float64(next(items)) * 0.1e-12
-        except ValueError:
-            smsi = None
-        isg = np.float64(next(items)) * 0.1e-9
+        msio = _parse_value(next(items), np.float64, 0.1e-9)
+        smsi = _parse_value(next(items), np.float64, 0.1e-12)
+        isg = _parse_value(next(items), np.float64, 0.1e-9)
 
         iono = IonosphericData(msio, smsi, isg)
         return data, iono
 
     @classmethod
     def parse_raw(cls, items: Iterator[str]):
-        refsv = np.float64(next(items)) * 0.1e-9
-        refsys = np.float64(next(items)) * 0.1e-9
-        ioe = np.uint16(next(items))
-        mdtr = np.float64(next(items)) * 0.1e-9
-        mdio = np.float64(next(items)) * 0.1e-9
+        refsv = _parse_value(next(items), np.float64, 0.1e-9)
+        refsys = _parse_value(next(items), np.float64, 0.1e-9)
+        ioe = _parse_value(next(items), np.uint16)
+        mdtr = _parse_value(next(items), np.float64, 0.1e-9)
+        mdio = _parse_value(next(items), np.float64, 0.1e-9)
 
-        try:
-            msio = np.float64(next(items)) * 0.1e-9
-        except ValueError:
-            msio = None
+        msio = _parse_value(next(items), np.float64, 0.1e-9)
 
         iono = IonosphericData(msio=msio, smsi=None, isg=None)
         return cls(refsv, None, refsys, None, None, ioe, mdtr, None, mdio, None), iono
@@ -211,3 +202,12 @@ class Track:
         return cls(
             cv_class, epoch, duration, sv, elevation, azimuth, data, iono, fr, hc, frc
         )
+
+
+def _parse_value(
+    value: str, type: np.dtype, conv: np.float64 | None = None
+) -> np.float64 | None:
+    try:
+        return type(value) * conv if conv else type(value)
+    except ValueError:
+        return None
