@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pycggtts"
-version = "0.1.1"
+version = "0.1.2"
 description = "Remote clock comparison using CGGTTS in Python"
 authors = ["Víctor Vázquez <victorvazrod@gmail.com>"]
 license = "LGPLv3"
